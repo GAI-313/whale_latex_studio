@@ -1,0 +1,51 @@
+{
+  "name": "Whale LaTeX Studio",
+
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "James-Yu.latex-workshop"
+      ],
+      "settings": {
+        "latex-workshop.latex.outDir": "/workspace/src/out",
+        "latex-workshop.latex.autoBuild.run": "onFileChange",
+        "latex-workshop.view.pdf.viewer": "tab",
+        "latex-workshop.view.pdf.internal.view.server": "beside",
+        "latex-workshop.latex.tools": [
+          {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+              "-e",
+              "$latex = 'uplatex -synctex=1 -interaction=nonstopmode -file-line-error %O %S'",
+              "-e",
+              "$bibtex = 'upbibtex %O %B'",
+              "-e",
+              "$dvipdf = 'dvipdfmx -o %D %S'",
+              "-e",
+              "$out_dir = '%OUTDIR%'",
+              "%DOC%"
+            ]
+          }
+        ],
+        "latex-workshop.latex.recipes": [
+          {
+            "name": "latexmk (uplatex)",
+            "tools": [
+              "latexmk"
+            ]
+          }
+        ],
+        "latex-workshop.latex.recipe.default": "latexmk (uplatex)"
+      }
+    }
+  },
+  "remoteUser": "root"
+}
